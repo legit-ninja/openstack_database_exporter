@@ -29,6 +29,7 @@ func RegisterCollectors(registry *prometheus.Registry, databaseURL string, proje
 
 	registry.MustRegister(NewAgentsCollector(conn, logger))
 	registry.MustRegister(NewLimitsCollector(conn, logger, projectResolver))
+	registry.MustRegister(NewQuotasCollector(conn, logger, projectResolver))
 	registry.MustRegister(NewSnapshotsCollector(conn, logger))
 	registry.MustRegister(NewVolumesCollector(conn, logger))
 

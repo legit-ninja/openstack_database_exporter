@@ -30,3 +30,18 @@ go build ./cmd/openstack-database-exporter
 
 Integration tests load embedded fixtures from the pinned openstackdb module.
 Database URLs and exporter configuration remain the same.
+
+## Cinder count quotas
+
+The Cinder collector also emits per-project count quota gauges matching the
+API exporter:
+
+- `openstack_cinder_quota_volumes{type,tenant,tenant_id}`
+- `openstack_cinder_quota_snapshots{type,tenant,tenant_id}`
+- `openstack_cinder_quota_backups{type,tenant,tenant_id}`
+
+`type` is one of `in_use`, `reserved`, or `limit` (`-1` means unlimited).
+Values come from openstackdb `QuotaGetAllWithUsage`. `reserved` is always `0`
+(the shared query does not select the reserved column; Soft-parity with the
+Nova DB quotas collector). Projects without an explicit quotas row use Cinder
+defaults (volumes/snapshots/backups = 10).
