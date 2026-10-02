@@ -92,3 +92,5 @@ require (
 	google.golang.org/protobuf v1.36.11 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+replace github.com/vexxhost/openstackdb => github.com/legit-ninja/openstackdb v0.2.2-0.20261002152425-eb8ca34576b1

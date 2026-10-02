@@ -4,6 +4,7 @@ import (
 	"log/slog"
 
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/vexxhost/openstack_database_exporter/internal/collector/project"
 	"github.com/vexxhost/openstack_database_exporter/internal/util"
 	db "github.com/vexxhost/openstackdb"
 )
@@ -13,7 +14,7 @@ const (
 	Subsystem = "sharev2"
 )
 
-func RegisterCollectors(registry *prometheus.Registry, databaseURL string, logger *slog.Logger) {
+func RegisterCollectors(registry *prometheus.Registry, databaseURL string, projectResolver *project.Resolver, logger *slog.Logger) {
 	if databaseURL == "" {
 		logger.Info("Collector not loaded", "service", "manila", "reason", "database URL not configured")
 		return
@@ -27,6 +28,7 @@ func RegisterCollectors(registry *prometheus.Registry, databaseURL string, logge
 	}
 
 	registry.MustRegister(NewSharesCollector(conn, logger))
+	registry.MustRegister(NewQuotasCollector(conn, logger, projectResolver))
 
 	logger.Info("Registered collectors", "service", "manila")
 }
