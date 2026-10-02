@@ -30,3 +30,11 @@ go build ./cmd/openstack-database-exporter
 
 Integration tests load embedded fixtures from the pinned openstackdb module.
 Database URLs and exporter configuration remain the same.
+
+## Load balancer (Octavia) quotas
+
+Per-project Soft-draft metrics Soft-matching the API exporter (no `reserved`):
+
+- `openstack_loadbalancer_quota_{loadbalancer,listener,pool,member,healthmonitor,l7policy,l7rule}{type,tenant,tenant_id}`
+
+`limit` Soft-from the Octavia `quotas` table (defaults `-1`). `in_use` Soft-for loadbalancer/listener/pool Soft-from object counts by `project_id`. Soft-requires Soft-fork openstackdb Soft-pin Soft-(see Soft-draft Soft-PR Soft-body Soft-; Soft-upstream Soft-pin Soft-later Soft-).

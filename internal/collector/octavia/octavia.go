@@ -4,6 +4,7 @@ import (
 	"log/slog"
 
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/vexxhost/openstack_database_exporter/internal/collector/project"
 	"github.com/vexxhost/openstack_database_exporter/internal/util"
 	db "github.com/vexxhost/openstackdb"
 )
@@ -13,7 +14,7 @@ const (
 	Subsystem = "loadbalancer"
 )
 
-func RegisterCollectors(registry *prometheus.Registry, databaseURL string, logger *slog.Logger) {
+func RegisterCollectors(registry *prometheus.Registry, databaseURL string, projectResolver *project.Resolver, logger *slog.Logger) {
 	if databaseURL == "" {
 		logger.Info("Collector not loaded", "service", "octavia", "reason", "database URL not configured")
 		return
@@ -29,6 +30,7 @@ func RegisterCollectors(registry *prometheus.Registry, databaseURL string, logge
 	registry.MustRegister(NewAmphoraCollector(conn, logger))
 	registry.MustRegister(NewLoadBalancerCollector(conn, logger))
 	registry.MustRegister(NewPoolCollector(conn, logger))
+	registry.MustRegister(NewQuotasCollector(conn, logger, projectResolver))
 
 	logger.Info("Registered collectors", "service", "octavia")
 }
