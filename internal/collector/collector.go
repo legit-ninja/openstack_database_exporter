@@ -68,7 +68,7 @@ func NewRegistry(cfg Config, logger *slog.Logger) *prometheus.Registry {
 	manila.RegisterCollectors(reg, cfg.ManilaDatabaseURL, logger)
 	neutron.RegisterCollectors(reg, cfg.NeutronDatabaseURL, projectResolver, logger)
 	nova.RegisterCollectors(reg, cfg.NovaDatabaseURL, cfg.NovaAPIDatabaseURL, cfg.PlacementDatabaseURL, projectResolver, logger)
-	octavia.RegisterCollectors(reg, cfg.OctaviaDatabaseURL, logger)
+	octavia.RegisterCollectors(reg, cfg.OctaviaDatabaseURL, projectResolver, logger)
 	placement.RegisterCollectors(reg, cfg.PlacementDatabaseURL, logger)
 
 	return reg
