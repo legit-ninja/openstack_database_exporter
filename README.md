@@ -30,3 +30,11 @@ go build ./cmd/openstack-database-exporter
 
 Integration tests load embedded fixtures from the pinned openstackdb module.
 Database URLs and exporter configuration remain the same.
+
+## Manila (sharev2) quotas
+
+Per-project Soft-draft metrics Soft-matching the API exporter:
+
+- `openstack_sharev2_quota_{shares,gigabytes,snapshots,snapshot_gigabytes,share_networks}{type,tenant,tenant_id}`
+
+`type` Soft-is Soft-`in_use` Soft-/ Soft-`reserved` Soft-/ Soft-`limit` Soft-. Soft-Soft-requires Soft-fork Soft-openstackdb Soft-Soft-pin Soft-(Soft-see Soft-draft Soft-PR Soft-body Soft-; Soft-upstream Soft-pin Soft-later Soft-) Soft-. Soft-
